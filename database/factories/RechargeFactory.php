@@ -1,0 +1,32 @@
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+use App\Models\Deposit;
+use App\Models\Recharge;
+use App\Models\User;
+
+class RechargeFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Recharge::class;
+
+    /**
+     * Define the model's default state.
+     */
+    public function definition(): array
+    {
+        return [
+            'user_id' => User::factory(),
+            'deposit_id' => Deposit::factory(),
+            'amount' => $this->faker->randomFloat(2, 0, 99999999.99),
+            'status' => $this->faker->boolean(),
+        ];
+    }
+}

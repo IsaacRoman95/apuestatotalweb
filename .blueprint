@@ -1,0 +1,23 @@
+created:
+    - database/factories/BankFactory.php
+    - database/factories/ChannelFactory.php
+    - database/factories/DepositFactory.php
+    - database/factories/RechargeFactory.php
+    - database/factories/RechargeModificationHistoryFactory.php
+    - database/migrations/2024_05_23_204301_create_banks_table.php
+    - database/migrations/2024_05_23_204302_create_channels_table.php
+    - database/migrations/2024_05_23_204303_create_deposits_table.php
+    - database/migrations/2024_05_23_204304_create_recharges_table.php
+    - database/migrations/2024_05_23_204305_create_recharge_modification_histories_table.php
+    - app/Models/Bank.php
+    - app/Models/Channel.php
+    - app/Models/Deposit.php
+    - app/Models/Recharge.php
+    - app/Models/Recharge_modification_history.php
+models:
+    User: { name: string, email: string, email_verified_at: 'timestamp nullable', password: string, remember_token: 'string:100 nullable' }
+    Bank: { name: string, account_number: 'string unique', cci: 'string unique', user_id: 'id foreign:users.id', status: boolean, relationships: { hasMany: Deposit } }
+    Channel: { name: string, description: string, cell_phone: string, user_id: 'id foreign:users.id', status: boolean, relationships: { hasMany: Recharge } }
+    Deposit: { user_id: 'id foreign:users.id', bank_id: 'id foreign:banks.id', url_baucher: string }
+    Recharge: { user_id: 'id foreign:users.id', deposit_id: 'id foreign:deposits.id', amount: 'decimal:10,2', status: boolean }
+    Recharge_modification_history: { user_id: 'id foreign:users.id', recharge_id: 'id foreign:recharges.id', previous_amount: 'decimal:10,2', updated_amount: 'decimal:10,2', status: boolean }
