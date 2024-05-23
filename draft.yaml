@@ -1,0 +1,32 @@
+models:
+  Bank:
+    name: string
+    account_number: string unique
+    cci: string unique
+    user_id: id foreign:users.id
+    status: boolean
+    relationships:
+      hasMany: Deposit
+  Channel:
+    name: string
+    description: string
+    cell_phone: string
+    user_id: id foreign:users.id
+    status: boolean
+    relationships:
+      hasMany: Recharge
+  Deposit:
+    user_id: id foreign:users.id
+    bank_id: id foreign:banks.id
+    url_baucher: string
+  Recharge:
+    user_id: id foreign:users.id
+    deposit_id: id foreign:deposits.id
+    amount: decimal:10,2
+    status: boolean
+  Recharge_modification_history:
+    user_id: id foreign:users.id
+    recharge_id: id foreign:recharges.id
+    previous_amount: decimal:10,2
+    updated_amount: decimal:10,2
+    status: boolean
