@@ -50,7 +50,15 @@ php artisan key:generate
 ```
 <br>
 
-<p>5. Crea una base de datos en mysql con el nombre apuestatotalweb</p>
+<p>5. Creación del Enlace Simbólico:</p>
+<p>Esto con el fin de poder acceder a los archivos almacenados en storage/app/public desde public/storage</p>
+
+```
+php artisan storage:link
+```
+<br>
+
+<p>6. Crea una base de datos en mysql con el nombre apuestatotalweb</p>
 <p>Es importante mantener el mismo nombre para que no existan conflictos al momento de ejecutar las migraciones de la base de datos.</p>
 
 ```
@@ -60,12 +68,21 @@ CREATE DATABASE IF NOT EXISTS apuestatotalweb;
 
 <br>
 
-<p>6. Ejecuta las migraciones y los seeders</p>
+<p>7. Ejecuta las migraciones y los seeders</p>
 <p>Esto generará de forma automática las tablas de la base de datos y sus respectivos registros de pruebas.</p>
 
 ```
 php artisan migrate --seed
 ```
+<br>
+
+<p>8. Ejecuta la aplicación</p>
+<p>Por ultimo ejecuta el siguiente comando para poder inicializar el servidor y poder probar la página web.</p>
+
+```
+php artisan serve
+```
+<p>Si haz mantenido la estructura del archivo .env.example y tienes configurado Laragon, puedes ejecutar la aplicacion escribiendo apuestatotalweb.test </p>
 <br>
   
 <h2>💻 Algunos de los packages utilizados fueron</h2>
