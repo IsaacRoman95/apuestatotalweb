@@ -88,7 +88,7 @@
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @forelse ($deposits as $deposit)
-                                        <tr>
+                                        <tr class="{{ $deposit->recharge->status == 0 ? 'bg-cancelled' : '' }}">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm font-medium text-gray-900">
                                                     {{ $deposit->recharge->id }}
@@ -109,17 +109,24 @@
                                                     {{ $deposit->bank->name }} </span>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <span
-                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $deposit->recharge->status == 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                                    {{ $deposit->url_baucher }} </span>
+                                                <a href="{{ $deposit->url_baucher }}" target="_blank"
+                                                    class="{{ $deposit->recharge->status == '1' ? 'text-indigo-600 hover:text-indigo-900' : 'text-gray-400 cursor-not-allowed' }}">
+                                                    Ver baucher
+                                                </a>
                                             </td>
+
+
+
+
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <span
                                                     class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $deposit->recharge->status == 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                                     {{ $deposit->recharge->created_at }} </span>
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $deposit->recharge->amount }}</td>
+                                            <td
+                                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 {{ $deposit->recharge->status != 'Active' ? 'text-strikethrough cursor-not-allowed' : '' }}">
+                                                {{ $deposit->recharge->amount }}
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>

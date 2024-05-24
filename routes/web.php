@@ -4,7 +4,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdviserController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RechargesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,7 +30,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    //routes customers
     Route::get('/customers/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
     Route::get('/customers/recharges', [CustomerController::class, 'recharges'])->name('customer.recharges');
     Route::get('/customers/chanels', [CustomerController::class, 'chanels'])->name('customer.chanels');
@@ -40,14 +38,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/adviser/recharges', [AdviserController::class, 'recharges'])->name('adviser.recharges');
     Route::get('/adviser/recharges/create', [AdviserController::class, 'create'])->name('advisers.recharge.create');
     Route::post('/adviser/recharges/store', [AdviserController::class, 'store'])->name('advisers.recharge.store');
-
-
+    Route::get('/adviser/recharges/{id}/edit', [AdviserController::class, 'edit'])->name('adviser.recharges.edit');
+    Route::put('/adviser/recharges/{id}', [AdviserController::class, 'update'])->name('adviser.recharges.update');
+    Route::post('/adviser/recharges/{id}/cancel', [AdviserController::class, 'cancelRecharge'])->name('advisers.recharge.cancel');
 
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/customers', [AdminController::class, 'customers'])->name('admin.customers');
     Route::get('/admin/advisers', [AdminController::class, 'advisers'])->name('admin.advisers');
     Route::get('/admin/recharges', [AdminController::class, 'recharges'])->name('admin.recharges');
-
+    Route::get('/admin/advisers/new', [AdminController::class, 'advisersnew'])->name('admin.advisers.new');
+    Route::post('/admin/advisers/new/store', [AdminController::class, 'adviser_store'])->name('admin.advisers.new.store');
 });
 
 require __DIR__ . '/auth.php';

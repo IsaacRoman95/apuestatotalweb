@@ -54,6 +54,10 @@
                                 Asesores
                             </x-nav-link>
 
+                            <x-nav-link :href="route('admin.advisers.new')" :active="request()->routeIs('admin.advisers.new')">
+                                Nuevo Asesor
+                            </x-nav-link>
+
                             <x-nav-link :href="route('admin.recharges')" :active="request()->routeIs('admin.recharges')">
                                 Lista de Recargas  
                             </x-nav-link>

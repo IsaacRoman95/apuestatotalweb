@@ -4,27 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Channel;
 use App\Models\Deposit;
-use App\Models\Recharge;
-use App\Models\User;
-use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    function dashboard()
+    public function dashboard()
     {
         $user = auth()->user();
         $deposits = Deposit::with('recharge')->where('user_id', $user->id)->get();
 
         $deposits_count = $deposits->count();
 
-        $totalAmount = $deposits->sum(function ($deposit) {
-            return $deposit->recharge->amount;
+        $totalAmount = $deposits->filter(function ($deposit) {
+            return $deposit->recharge->status == 1;
+        })->sum(function ($filteredDeposit) {
+            return $filteredDeposit->recharge->amount;
         });
 
         $recharges_count = $deposits->sum(function ($deposit) {
             return $deposit->recharge ? 1 : 0;
         });
-        
+
         return view(
             'customer.dashboard',
             [
@@ -35,14 +34,14 @@ class CustomerController extends Controller
         );
     }
 
-    function recharges()
+    public function recharges()
     {
         $user = auth()->user();
         $deposits = Deposit::where('user_id', $user->id)->orderByDesc('created_at')->get();
         return view('customer.myrecharges', compact('deposits'));
     }
 
-    function chanels()
+    public function chanels()
     {
         $chanels = Channel::where('status', 1)->get();
         return view('customer.chanels', compact('chanels'));

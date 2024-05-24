@@ -41,8 +41,10 @@ class AdviserController extends Controller
     {
         $user = auth()->user();
         $recharges = Recharge::where('user_id', $user->id)
-            ->orderByDesc('created_at')
+            ->with(['deposit.user', 'deposit.bank', 'channel'])
+            ->orderBy('created_at', 'desc')
             ->get();
+
         return view('adviser.recharges', compact('recharges'));
     }
 
@@ -52,7 +54,6 @@ class AdviserController extends Controller
         $channels = Channel::all();
         return view('adviser.create', ['banks' => $banks, 'channels' => $channels]);
     }
-
 
     public function store(Request $request)
     {
@@ -72,22 +73,24 @@ class AdviserController extends Controller
             'amount.required' => 'Debe ingresar un monto.',
             'amount.numeric' => 'El monto debe ser numérico.',
             'amount.min' => 'El monto debe ser mayor o igual a 0.',
+            'bank_id.required' => 'Debe seleccionar un banco.',
+            'bank_id.exists' => 'El banco seleccionado no es válido.',
+            'channel_id.required' => 'Debe seleccionar un canal de atención.',
+            'channel_id.exists' => 'El canal de atención seleccionado no es válido.',
         ]);
 
         $userCode = $request->user_code;
         $folderName = 'users/' . $userCode;
 
-        if (!Storage::exists($folderName)) {
-            Storage::makeDirectory($folderName);
+        if (!Storage::disk('public')->exists($folderName)) {
+            Storage::disk('public')->makeDirectory($folderName);
         }
 
         $imageName = time() . '.' . $request->image->getClientOriginalExtension();
+        $path = $request->image->storeAs($folderName, $imageName, 'public');
 
-        $request->image->storeAs($folderName, $imageName);
-
-        //generando el registro del depósito
         $user_customer = User::where('user_code', $userCode)->first();
-        $url = asset('users/' . $userCode . '/' . $imageName);
+        $url = Storage::disk('public')->url($path);
 
         $deposit = new Deposit();
         $deposit->user_id = $user_customer->id;
@@ -95,17 +98,47 @@ class AdviserController extends Controller
         $deposit->url_baucher = $url;
         $deposit->save();
 
-        //generando el registro de la recarga
+        // Generar el registro de la recarga
         $user = auth()->user();
 
         $recharge = new Recharge();
         $recharge->user_id = $user->id;
         $recharge->deposit_id = $deposit->id;
         $recharge->amount = $request->amount;
-        $recharge->channel_id = 1;
+        $recharge->channel_id = $request->channel_id;
         $recharge->status = 1;
         $recharge->save();
 
         return redirect()->route('adviser.recharges')->with('success', 'Recarga creada exitosamente.');
+    }
+
+    public function edit($id)
+    {
+        $recharge = Recharge::findOrFail($id);
+        return view('adviser.edit', compact('recharge'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $recharge = Recharge::findOrFail($id);
+        $recharge->amount = $request->input('amount');
+        $recharge->save();
+
+        $user = auth()->user();
+
+        if ($user->hasRole('admin')) {
+            return redirect()->route('admin.recharges')->with('success', 'Monto actualizado exitosamente.');
+        } elseif ($user->hasRole('adviser')) {
+            return redirect()->route('adviser.recharges')->with('success', 'Monto actualizado exitosamente.');
+        }
+    }
+
+    public function cancelRecharge($id)
+    {
+        $recharge = Recharge::findOrFail($id);
+        $recharge->status = 0;
+        $recharge->save();
+
+        return redirect()->route('adviser.recharges')->with('success', 'Recarga anulada exitosamente.');
     }
 }
