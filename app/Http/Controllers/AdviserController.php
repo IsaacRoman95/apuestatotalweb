@@ -83,18 +83,16 @@ class AdviserController extends Controller
         $userCode = $request->user_code;
         $folderName = 'users/' . $userCode;
 
-        if (!Storage::exists($folderName)) {
-            Storage::makeDirectory($folderName);
+        if (!Storage::disk('public')->exists($folderName)) {
+            Storage::disk('public')->makeDirectory($folderName);
         }
 
         $imageName = time() . '.' . $request->image->getClientOriginalExtension();
-
-        $request->image->storeAs($folderName, $imageName);
+        $path = $request->image->storeAs($folderName, $imageName, 'public');
 
         $user_customer = User::where('user_code', $userCode)->first();
-        $url = asset('storage/' . $folderName . '/' . $imageName);
+        $url = Storage::disk('public')->url($path);
 
-        // Generar el registro del depósito
         $deposit = new Deposit();
         $deposit->user_id = $user_customer->id;
         $deposit->bank_id = $request->bank_id;
