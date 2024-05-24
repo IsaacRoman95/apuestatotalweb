@@ -23,13 +23,26 @@
                 <div>
                     <label for="bank_id" class="block font-medium">Banco:</label>
                     <select name="bank_id" id="bank_id"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         <option value="">Seleccione un banco</option>
-                        @foreach($banks as $bank)
+                        @foreach ($banks as $bank)
                             <option value="{{ $bank->id }}">{{ $bank->name }}</option>
                         @endforeach
                     </select>
                     @error('bank_id')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <label for="channel_id" class="block font-medium">Canal de Atención:</label>
+                    <select name="channel_id" id="channel_id"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <option value="">Seleccione un canal de atención</option>
+                        @foreach ($channels as $channel)
+                            <option value="{{ $channel->id }}">{{ $channel->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('channel_id')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror
                 </div>

@@ -13,25 +13,23 @@ class CustomerController extends Controller
     function dashboard()
     {
         $user = auth()->user();
-        $deposits = Deposit::where('user_id', $user->id)->get();
+        $deposits = Deposit::with('recharge')->where('user_id', $user->id)->get();
+
         $deposits_count = $deposits->count();
 
-        $totalAmount = 0;
-        $recharges_count = 0;
-        if($deposits_count>0){
-            $recharges = $deposits->recharges->get();
-            if ($recharges) {
-                $totalAmount = $recharges->sum('amount');
-            }
-            $recharges_count = $recharges->count();
-        }
+        $totalAmount = $deposits->sum(function ($deposit) {
+            return $deposit->recharge->amount;
+        });
 
-
+        $recharges_count = $deposits->sum(function ($deposit) {
+            return $deposit->recharge ? 1 : 0;
+        });
+        
         return view(
             'customer.dashboard',
             [
                 'deposits_count' => $deposits_count,
-                'recharges_count' =>$recharges_count,
+                'recharges_count' => $recharges_count,
                 'totalAmount' => $totalAmount
             ]
         );
@@ -40,7 +38,7 @@ class CustomerController extends Controller
     function recharges()
     {
         $user = auth()->user();
-        $deposits = Deposit::where('user_id', $user->id)->orderByDesc('created_at') ->get();
+        $deposits = Deposit::where('user_id', $user->id)->orderByDesc('created_at')->get();
         return view('customer.myrecharges', compact('deposits'));
     }
 

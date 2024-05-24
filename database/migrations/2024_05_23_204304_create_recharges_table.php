@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('deposit_id')->constrained();
+            $table->foreignId('channel_id')->constrained();
             $table->decimal('amount', 10, 2);
             $table->boolean('status');
             $table->timestamps();

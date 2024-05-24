@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('cell_phone');
+            $table->string('link');
             $table->foreignId('user_id')->constrained();
             $table->boolean('status');
             $table->timestamps();
