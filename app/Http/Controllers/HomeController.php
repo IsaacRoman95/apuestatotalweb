@@ -9,15 +9,17 @@ class HomeController extends Controller
 {
     public function index()
     {
-        if (Auth::id()) {
+        if (Auth::check()) {
             $user = auth()->user();
             if ($user->hasRole('admin')) {
-                return redirect()->intended(route('admin.dashboard'));
+                return redirect()->route('admin.dashboard');
             } elseif ($user->hasRole('customer')) {
-                return redirect()->intended(route('customer.dashboard'));
+                return redirect()->route('customer.dashboard');
             } elseif ($user->hasRole('adviser')) {
-                return redirect()->intended(route('adviser.dashboard'));
+                return redirect()->route('adviser.dashboard');
             }
         }
+
+        return redirect()->route('login')->with('error', 'Debes iniciar sesión para acceder.');
     }
 }

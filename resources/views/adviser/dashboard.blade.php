@@ -5,7 +5,19 @@
         </h2>
     </x-slot>
 
+
+
+
     <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-8">
+            <div class="bg-white dark:bg-red-600 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    {{ __('Bienvenido Asesor') }}
+                </div>
+            </div>
+        </div>
+
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex-col w-full mx-auto">
                 <div class="grid grid-cols-3 gap-x-2 gap-y-3 md:gap-4 md:grid-cols-5">
@@ -98,7 +110,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 gap-4 mt-4 md:grid-cols-5">
+                {{-- <div class="grid grid-cols-1 gap-4 mt-4 md:grid-cols-5">
                     <div class="p-2 bg-white rounded-lg shadow-md md:p-1 md:col-span-2 shadow-zinc-900 max-h-96">
                         <canvas id="myChart"></canvas>
                     </div>
@@ -108,7 +120,7 @@
                     <div class="p-2 bg-white rounded-lg shadow-md md:p-1 md:col-span-2 shadow-zinc-900 max-h-96">
                         <canvas id="myChart3"></canvas>
                     </div>
-                </div>
+                </div> --}}
             </div>
 
         </div>

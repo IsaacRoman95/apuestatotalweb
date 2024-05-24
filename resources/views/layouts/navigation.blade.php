@@ -31,7 +31,9 @@
                             <x-nav-link :href="route('adviser.dashboard')" :active="request()->routeIs('adviser.dashboard')">
                                 {{ __('Dashboard') }}
                             </x-nav-link>
-
+                            <x-nav-link :href="route('adviser.customers')" :active="request()->routeIs('admin.customers')">
+                                Clientes
+                            </x-nav-link>
                             <x-nav-link :href="route('adviser.recharges')" :active="request()->routeIs('adviser.recharges')">
                                 Recargas Realizadas
                             </x-nav-link>
