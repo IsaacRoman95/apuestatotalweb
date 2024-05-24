@@ -30,8 +30,17 @@ class UserSystemSeeder extends Seeder
         $adviser->password = "apuestatotal$2024";
         $adviser->save();
 
+        //Se crean el usuario Customer
+        $customer = new User();
+        $customer->name = "Cliente";
+        $customer->email = "cliente01@gmail.com";
+        $customer->email_verified_at = Carbon::now();
+        $customer->password = "apuestatotal$2024";
+        $customer->save();
+
         //Se asigna el rol correspondiente a cada usuario
         $admin->assignRole('admin');
         $adviser->assignRole('adviser');
+        $customer->assignRole('customer');
     }
 }
