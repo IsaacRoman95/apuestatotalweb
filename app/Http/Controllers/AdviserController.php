@@ -124,6 +124,21 @@ class AdviserController extends Controller
         $recharge->amount = $request->input('amount');
         $recharge->save();
 
-        return redirect()->route('adviser.recharges')->with('success', 'Monto actualizado exitosamente.');
+        $user = auth()->user();
+
+        if ($user->hasRole('admin')) {
+            return redirect()->route('admin.recharges')->with('success', 'Monto actualizado exitosamente.');
+        } elseif ($user->hasRole('adviser')) {
+            return redirect()->route('adviser.recharges')->with('success', 'Monto actualizado exitosamente.');
+        }
+    }
+
+    public function cancelRecharge($id)
+    {
+        $recharge = Recharge::findOrFail($id);
+        $recharge->status = 0;
+        $recharge->save();
+
+        return redirect()->route('adviser.recharges')->with('success', 'Recarga anulada exitosamente.');
     }
 }

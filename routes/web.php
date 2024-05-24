@@ -38,14 +38,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/adviser/recharges', [AdviserController::class, 'recharges'])->name('adviser.recharges');
     Route::get('/adviser/recharges/create', [AdviserController::class, 'create'])->name('advisers.recharge.create');
     Route::post('/adviser/recharges/store', [AdviserController::class, 'store'])->name('advisers.recharge.store');
-
     Route::get('/adviser/recharges/{id}/edit', [AdviserController::class, 'edit'])->name('adviser.recharges.edit');
-    Route::put('adviser/recharges/{id}', [AdviserController::class, 'update'])->name('adviser.recharges.update');
+    Route::put('/adviser/recharges/{id}', [AdviserController::class, 'update'])->name('adviser.recharges.update');
+    Route::post('/adviser/recharges/{id}/cancel', [AdviserController::class, 'cancelRecharge'])->name('advisers.recharge.cancel');
 
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/customers', [AdminController::class, 'customers'])->name('admin.customers');
     Route::get('/admin/advisers', [AdminController::class, 'advisers'])->name('admin.advisers');
     Route::get('/admin/recharges', [AdminController::class, 'recharges'])->name('admin.recharges');
+    Route::get('/admin/advisers/new', [AdminController::class, 'advisersnew'])->name('admin.advisers.new');
+    Route::post('/admin/advisers/new/store', [AdminController::class, 'adviser_store'])->name('admin.advisers.new.store');
 });
 
 require __DIR__ . '/auth.php';

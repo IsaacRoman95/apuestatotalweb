@@ -104,7 +104,8 @@
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @forelse ($recharges as $recharge)
-                                        <tr>
+                                        <tr
+                                            class="{{ $recharge->status == 0 ? 'bg-cancelled cursor-not-allowed' : '' }}">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm font-medium text-gray-900">{{ $recharge->id }}</div>
                                             </td>
@@ -125,7 +126,9 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <a href="{{ $recharge->deposit->url_baucher }}" target="_blank"
-                                                    class="text-indigo-600 hover:text-indigo-900">Ver baucher</a>
+                                                    class="{{ $recharge->status == '1' ? 'text-indigo-600 hover:text-indigo-900' : 'text-gray-400 cursor-not-allowed' }}">
+                                                    Ver baucher
+                                                </a>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <span
@@ -133,21 +136,33 @@
                                                     {{ $recharge->created_at->format('d-m-Y H:i') }}
                                                 </span>
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <td
+                                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 {{ $recharge->status != 'Active' ? 'text-strikethrough cursor-not-allowed' : '' }}">
                                                 {{ $recharge->amount }}
                                             </td>
+
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <span
                                                     class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $recharge->status == 1 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                                     {{ $recharge->channel->name }}
                                                 </span>
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap flex gap-2 text-sm">
-                                                <a href="{{ route('adviser.recharges.edit', $recharge->id) }}"
-                                                    class="text-indigo-600 hover:text-indigo-900 hover:bg-blue-200 hover:shadow-md px-2 py-1 rounded-md">Editar</a>
 
-                                                <a href="{{ route('adviser.recharges.edit', $recharge->id) }}"
-                                                    class="text-red-600 hover:text-red-900 hover:bg-red-200 hover:shadow-md px-2 py-1 rounded-md">Anular</a>
+                                            <td class="px-6 py-4 whitespace-nowrap flex gap-2 text-sm">
+                                                @if ($recharge->status == 1)
+                                                    <a href="{{ route('adviser.recharges.edit', $recharge->id) }}"
+                                                        class="text-indigo-600 hover:text-indigo-900 hover:bg-blue-200 hover:shadow-md px-2 py-1 rounded-md">Editar</a>
+
+                                                    <form
+                                                        action="{{ route('advisers.recharge.cancel', $recharge->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="text-red-600 hover:text-red-900 hover:bg-red-200 hover:shadow-md px-2 py-1 rounded-md">Anular</button>
+                                                    </form>
+                                                @else
+                                                    <span class="text-gray-500 px-2 py-1">Recarga Anulada</span>
+                                                @endif
                                             </td>
                                         </tr>
                                     @empty

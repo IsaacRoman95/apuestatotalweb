@@ -17,6 +17,16 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        .bg-cancelled {
+            background-color: #FECACA;
+        }
+
+        .text-strikethrough {
+            text-decoration: line-through;
+        }
+    </style>
 </head>
 
 <body class="font-sans antialiased">

@@ -14,14 +14,16 @@ class CustomerController extends Controller
 
         $deposits_count = $deposits->count();
 
-        $totalAmount = $deposits->sum(function ($deposit) {
-            return $deposit->recharge->amount;
+        $totalAmount = $deposits->filter(function ($deposit) {
+            return $deposit->recharge->status == 1;
+        })->sum(function ($filteredDeposit) {
+            return $filteredDeposit->recharge->amount;
         });
 
         $recharges_count = $deposits->sum(function ($deposit) {
             return $deposit->recharge ? 1 : 0;
         });
-        
+
         return view(
             'customer.dashboard',
             [
