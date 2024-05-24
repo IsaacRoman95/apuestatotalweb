@@ -41,8 +41,10 @@ class AdviserController extends Controller
     {
         $user = auth()->user();
         $recharges = Recharge::where('user_id', $user->id)
-            ->orderByDesc('created_at')
+            ->with(['deposit.user', 'deposit.bank', 'channel'])
+            ->orderBy('created_at', 'desc')
             ->get();
+
         return view('adviser.recharges', compact('recharges'));
     }
 
@@ -72,6 +74,10 @@ class AdviserController extends Controller
             'amount.required' => 'Debe ingresar un monto.',
             'amount.numeric' => 'El monto debe ser numérico.',
             'amount.min' => 'El monto debe ser mayor o igual a 0.',
+            'bank_id.required' => 'Debe seleccionar un banco.',
+            'bank_id.exists' => 'El banco seleccionado no es válido.',
+            'channel_id.required' => 'Debe seleccionar un canal de atención.',
+            'channel_id.exists' => 'El canal de atención seleccionado no es válido.',
         ]);
 
         $userCode = $request->user_code;
@@ -85,24 +91,24 @@ class AdviserController extends Controller
 
         $request->image->storeAs($folderName, $imageName);
 
-        //generando el registro del depósito
         $user_customer = User::where('user_code', $userCode)->first();
-        $url = asset('users/' . $userCode . '/' . $imageName);
+        $url = asset('storage/' . $folderName . '/' . $imageName);
 
+        // Generar el registro del depósito
         $deposit = new Deposit();
         $deposit->user_id = $user_customer->id;
         $deposit->bank_id = $request->bank_id;
         $deposit->url_baucher = $url;
         $deposit->save();
 
-        //generando el registro de la recarga
+        // Generar el registro de la recarga
         $user = auth()->user();
 
         $recharge = new Recharge();
         $recharge->user_id = $user->id;
         $recharge->deposit_id = $deposit->id;
         $recharge->amount = $request->amount;
-        $recharge->channel_id = 1;
+        $recharge->channel_id = $request->channel_id;
         $recharge->status = 1;
         $recharge->save();
 

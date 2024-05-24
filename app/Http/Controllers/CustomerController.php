@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Channel;
 use App\Models\Deposit;
-use App\Models\Recharge;
-use App\Models\User;
-use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {

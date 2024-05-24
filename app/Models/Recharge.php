@@ -44,4 +44,9 @@ class Recharge extends Model
     {
         return $this->belongsTo(Deposit::class);
     }
+
+    public function channel(): BelongsTo
+    {
+        return $this->belongsTo(Channel::class);
+    }
 }
