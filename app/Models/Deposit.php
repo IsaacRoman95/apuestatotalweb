@@ -41,4 +41,9 @@ class Deposit extends Model
     {
         return $this->belongsTo(Bank::class);
     }
+
+    public function recharge()
+    {
+        return $this->hasOne(Recharge::class);
+    }
 }

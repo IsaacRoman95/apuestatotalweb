@@ -31,7 +31,7 @@ class UserSystemSeeder extends Seeder
         $adviser->save();
 
         //Se asigna el rol correspondiente a cada usuario
-        $admin->assignRole('administrator');
+        $admin->assignRole('admin');
         $adviser->assignRole('adviser');
     }
 }

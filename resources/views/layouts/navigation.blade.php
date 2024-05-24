@@ -12,13 +12,55 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                    @if (auth()->check())
+                        @role('customer')
+                            <x-nav-link :href="route('customer.dashboard')" :active="request()->routeIs('customer.dashboard')">
+                                {{ __('Dashboard') }}
+                            </x-nav-link>
 
-                    <x-nav-link :href="route('recharges.index')" :active="request()->routeIs('recharges.index')">
-                        {{ __('Recharges') }}
-                    </x-nav-link>
+                            <x-nav-link :href="route('customer.recharges')" :active="request()->routeIs('customer.recharges')">
+                                Mis Recargas
+                            </x-nav-link>
+
+                            <x-nav-link :href="route('customer.chanels')" :active="request()->routeIs('customer.chanels')">
+                                Notificar Deposito
+                            </x-nav-link>
+                        @endrole
+
+                        @role('adviser')
+                            <x-nav-link :href="route('adviser.dashboard')" :active="request()->routeIs('adviser.dashboard')">
+                                {{ __('Dashboard') }}
+                            </x-nav-link>
+
+                            <x-nav-link :href="route('adviser.recharges')" :active="request()->routeIs('adviser.recharges')">
+                                Recargas Realizadas
+                            </x-nav-link>
+
+                            <x-nav-link :href="route('advisers.recharge.create')" :active="request()->routeIs('advisers.recharge.create')">
+                                Nueva Recarga
+                            </x-nav-link>
+                        @endrole
+
+                        @role('admin')
+                            <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                                {{ __('Dashboard') }}
+                            </x-nav-link>
+
+                            <x-nav-link :href="route('admin.customers')" :active="request()->routeIs('admin.customers')">
+                                Clientes
+                            </x-nav-link>
+
+                            <x-nav-link :href="route('admin.advisers')" :active="request()->routeIs('admin.advisers')">
+                                Asesores
+                            </x-nav-link>
+
+                            <x-nav-link :href="route('admin.recharges')" :active="request()->routeIs('admin.recharges')">
+                                Lista de Recargas  
+                            </x-nav-link>
+                        @endrole
+                    @else
+                        <p>No estás autenticado.</p>
+                    @endif
                 </div>
             </div>
 

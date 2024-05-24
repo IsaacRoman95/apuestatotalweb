@@ -37,6 +37,8 @@
             {{ $slot }}
         </main>
     </div>
+
+    @yield('toast', view('toast.toast'))
 </body>
 
 </html>

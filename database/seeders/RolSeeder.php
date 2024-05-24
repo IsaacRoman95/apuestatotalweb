@@ -15,7 +15,7 @@ class RolSeeder extends Seeder
     {
         $customer_role = Role::create(['name' => 'customer']);
         $adviser_role = Role::create(['name' => 'adviser']);
-        $administrator_role = Role::create(['name' => 'administrator']);
+        $administrator_role = Role::create(['name' => 'admin']);
 
         $permission = Permission::create(['name' => 'recharges.index'])
             ->syncRoles([$administrator_role, $adviser_role]);

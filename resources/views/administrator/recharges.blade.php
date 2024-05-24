@@ -124,7 +124,7 @@
                                         <tr>
                                             <td colspan="1000">
                                                 <div class="text-sm font-medium text-gray-900 py-6 px-3">
-                                                    Aun no haz creado ninguna recarga.
+                                                    Aun no se han creado ningun registro de recarga.
                                                 </div>
                                             </td>
                                         </tr>
