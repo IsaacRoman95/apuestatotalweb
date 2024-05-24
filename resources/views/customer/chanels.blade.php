@@ -6,7 +6,28 @@
     </x-slot>
 
     <div class="py-12">
+
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-8">
+            <div class="text-gray-900">
+                <p>
+                    Puedes notificarnos tus depositos por nuestros diversos canales.
+                </p>
+                <p>
+                    Recuerda tener al alcance su baucher o documento de pago del depósito.
+                </p>
+                <p class="mt-4 mb-2">
+                    Tu codigo de cliente es: 
+                </p>
+                <p class="p-3 rounded-md bg-yellow-300 shadow-md text-zinc-900 font-bold w-min">
+                    {{ Auth()->user()->user_code }}
+                </p>
+            </div>
+        </div>
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <p class="w-full mb-3">
+                Nuestros canales de comunicacion son: 
+            </p>
             <!-- Facebook -->
             <a href="https://www.facebook.com/apuestatotaloficial" target="_blank">
                 <button type="button" data-twe-ripple-init data-twe-ripple-color="light"

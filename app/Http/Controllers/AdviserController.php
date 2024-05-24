@@ -37,6 +37,14 @@ class AdviserController extends Controller
         );
     }
 
+    public function customers()
+    {
+        $customer_rol = Role::where('name', 'customer')->first();
+        $users = $customer_rol->users;
+
+        return view('adviser.customers', compact('users'));
+    }
+
     public function recharges()
     {
         $user = auth()->user();
