@@ -92,6 +92,14 @@
                                                 </a>
                                             </div>
                                         </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <div class="flex space-x-4 items-center">
+                                                <a href="#">
+                                                    <span>Acciones</span>
+                                                </a>
+                                            </div>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -133,6 +141,13 @@
                                                     class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $recharge->status == 1 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                                     {{ $recharge->channel->name }}
                                                 </span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap flex gap-2 text-sm">
+                                                <a href="{{ route('adviser.recharges.edit', $recharge->id) }}"
+                                                    class="text-indigo-600 hover:text-indigo-900 hover:bg-blue-200 hover:shadow-md px-2 py-1 rounded-md">Editar</a>
+
+                                                <a href="{{ route('adviser.recharges.edit', $recharge->id) }}"
+                                                    class="text-red-600 hover:text-red-900 hover:bg-red-200 hover:shadow-md px-2 py-1 rounded-md">Anular</a>
                                             </td>
                                         </tr>
                                     @empty

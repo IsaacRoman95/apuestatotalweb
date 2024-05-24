@@ -39,6 +39,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/adviser/recharges/create', [AdviserController::class, 'create'])->name('advisers.recharge.create');
     Route::post('/adviser/recharges/store', [AdviserController::class, 'store'])->name('advisers.recharge.store');
 
+    Route::get('/adviser/recharges/{id}/edit', [AdviserController::class, 'edit'])->name('adviser.recharges.edit');
+    Route::put('adviser/recharges/{id}', [AdviserController::class, 'update'])->name('adviser.recharges.update');
+
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/customers', [AdminController::class, 'customers'])->name('admin.customers');
     Route::get('/admin/advisers', [AdminController::class, 'advisers'])->name('admin.advisers');

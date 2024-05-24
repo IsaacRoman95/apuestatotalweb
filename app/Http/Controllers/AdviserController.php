@@ -55,7 +55,6 @@ class AdviserController extends Controller
         return view('adviser.create', ['banks' => $banks, 'channels' => $channels]);
     }
 
-
     public function store(Request $request)
     {
         $request->validate([
@@ -111,5 +110,20 @@ class AdviserController extends Controller
         $recharge->save();
 
         return redirect()->route('adviser.recharges')->with('success', 'Recarga creada exitosamente.');
+    }
+
+    public function edit($id)
+    {
+        $recharge = Recharge::findOrFail($id);
+        return view('adviser.edit', compact('recharge'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $recharge = Recharge::findOrFail($id);
+        $recharge->amount = $request->input('amount');
+        $recharge->save();
+
+        return redirect()->route('adviser.recharges')->with('success', 'Monto actualizado exitosamente.');
     }
 }

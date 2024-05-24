@@ -7,12 +7,12 @@ use App\Models\Recharge;
 
 class AdminController extends Controller
 {
-    function dashboard()
+    public function dashboard()
     {
         return view('administrator.dashboard');
     }
 
-    function customers()
+    public function customers()
     {
         $customer_rol = Role::where('name', 'customer')->first();
         $users = $customer_rol->users;
@@ -20,7 +20,7 @@ class AdminController extends Controller
         return view('administrator.customers', compact('users'));
     }
 
-    function advisers()
+    public function advisers()
     {
         $adviser_rol = Role::where('name', 'adviser')->first();
         $users = $adviser_rol->users;

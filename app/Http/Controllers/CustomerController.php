@@ -7,7 +7,7 @@ use App\Models\Deposit;
 
 class CustomerController extends Controller
 {
-    function dashboard()
+    public function dashboard()
     {
         $user = auth()->user();
         $deposits = Deposit::with('recharge')->where('user_id', $user->id)->get();
@@ -32,14 +32,14 @@ class CustomerController extends Controller
         );
     }
 
-    function recharges()
+    public function recharges()
     {
         $user = auth()->user();
         $deposits = Deposit::where('user_id', $user->id)->orderByDesc('created_at')->get();
         return view('customer.myrecharges', compact('deposits'));
     }
 
-    function chanels()
+    public function chanels()
     {
         $chanels = Channel::where('status', 1)->get();
         return view('customer.chanels', compact('chanels'));
