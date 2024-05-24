@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bank;
+use App\Models\Channel;
 use App\Models\Deposit;
 use App\Models\Recharge;
 use App\Models\RechargeModificationHistory;
@@ -48,7 +49,8 @@ class AdviserController extends Controller
     public function create()
     {
         $banks = Bank::all();
-        return view('adviser.create', ['banks' => $banks]);
+        $channels = Channel::all();
+        return view('adviser.create', ['banks' => $banks, 'channels' => $channels]);
     }
 
 
@@ -59,6 +61,7 @@ class AdviserController extends Controller
             'user_code' => ['required', 'exists:users,user_code', new UserExistsRule],
             'amount' => 'required|numeric|min:0',
             'bank_id' => 'required|exists:banks,id',
+            'channel_id' => 'required|exists:channels,id',
         ], [
             'image.required' => 'Debe seleccionar una imagen.',
             'image.image' => 'El archivo seleccionado debe ser una imagen.',
@@ -99,6 +102,7 @@ class AdviserController extends Controller
         $recharge->user_id = $user->id;
         $recharge->deposit_id = $deposit->id;
         $recharge->amount = $request->amount;
+        $recharge->channel_id = 1;
         $recharge->status = 1;
         $recharge->save();
 
