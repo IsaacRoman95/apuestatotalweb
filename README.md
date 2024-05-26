@@ -66,9 +66,10 @@ php artisan migrate --seed
 <br>
 
 <p>8. Ejecuta la aplicación</p>
-<p>Por ultimo ejecuta el siguiente comando para poder inicializar el servidor y poder probar la página web.</p>
+<p>Por ultimo para ejecutar la aplicación, ubícate en el proyecto y escribe los siguientes comandos. De esta forma podrás inicializar el servidor y poder probar la página web.</p>
 
 ```
+npm install && npm run dev
 php artisan serve
 ```
 <p>Si haz mantenido la estructura del archivo .env.example y tienes configurado Laragon, puedes ejecutar la aplicacion escribiendo apuestatotalweb.test </p>
@@ -76,7 +77,7 @@ php artisan serve
 
 ## El ANALISIS DE LA PRUEBA TECNICA SE ENCUENTRA EN LA CARPETA
 <p>https://github.com/IsaacRoman95/apuestatotalweb/tree/master/Analisis_prueba_tecnica</p>
-<p>Asi mismo allì se encuentran las credenciales de acceso a los tres tipos de usuarios del sismtema.</p>
+<p>Asi mismo allí se encuentran las credenciales de acceso a los tres tipos de usuarios del sistema.</p>
   
 <h2>💻 Algunos de los packages utilizados fueron</h2>
 
